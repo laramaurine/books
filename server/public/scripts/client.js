@@ -18,10 +18,7 @@ function handleSubmit() {
   addBook(book);
 }
 
-function deleteBook(){
-  console.log('delete clicked');
-  console.log( $(this).closest('tr').data('id') );
-}
+
 
 // adds a book to the database
 function addBook(bookToAdd) {
@@ -59,11 +56,28 @@ function renderBooks(books) {
   for(let i = 0; i < books.length; i += 1) {
     let book = books[i];
     // For each book, append a new row to our table
-    let $tr = $('<tr></tr>');
-    $tr.data('book', book);
+    let $tr = $(`<tr></tr>`);
+    $tr.data('id', book.id);
     $tr.append(`<td>${book.title}</td>`);
     $tr.append(`<td>${book.author}</td>`);
-    $tr.append(`<button class="btn-delete">DELETE</button>`);
+    $tr.append(`<td><button class="btn-delete">DELETE</button></td>`);
     $('#bookShelf').append($tr);
   }
+}
+function deleteBook(){
+  console.log('delete clicked');
+  console.log( $(this).closest('tr').data('id') );
+  let bookId = $(this).closest('tr').data('id');
+    $.ajax({
+      method: 'DELETE',
+      url:`/books/${bookId}`
+    })
+    .then( function(response) {
+      refreshBooks();
+    })
+    .catch( function(error){
+      console.log('error in delete', error);
+      alert('something went wrong try again later')
+    })
+  
 }

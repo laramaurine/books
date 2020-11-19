@@ -55,9 +55,17 @@ router.put('/:id',  (req, res) => {
 router.delete('/:id',  (req, res) => {
   let id = req.params.id; // id of the thing to delete
   console.log('Delete route called with id of', id);
-
+  let sqlText = `DELETE FROM books WHERE id=$1;`;
+  pool.query(sqlText, [id])
+  .then( (result) => {
+    res.sendStatus(200);
+  })
+  .catch( (error) => {
+    console.log('Error from db:', error);
+            res.sendStatus(500);
+  })
   // TODO - REPLACE BELOW WITH YOUR CODE
-  res.sendStatus(500);
+  //res.sendStatus(500);
 
 });
 

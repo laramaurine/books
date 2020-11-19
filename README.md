@@ -29,7 +29,7 @@ Add another button to each book allowing the user to `Mark as Read`. Again, star
 - [ ] DELETE & PUT AJAX calls
 - [ ] DELETE & PUT SERVER SIDE 
 - [ ] Page should refresh with up to date data after a DELETE or PUT
-
+--DELETE A BOOK WORKS!!!! 
 
 ## Stretch Goals
 
