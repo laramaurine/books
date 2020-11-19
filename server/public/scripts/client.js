@@ -7,6 +7,11 @@ $(document).ready(function(){
 function addClickHandlers() {
   $('#submitBtn').on('click', handleSubmit);
   $('#bookShelf').on('click', '.btn-delete', deleteBook);
+  $('#bookShelf').on('click', '.btn-read', readBook);
+  $('#bookShelf').on('click', '.btn-read', function(event){
+    let bookId = $(this).closest('tr').data('id');
+    readBook('read', bookId)
+  });
   // TODO - Add code for edit & delete buttons
 }
 
@@ -60,7 +65,9 @@ function renderBooks(books) {
     $tr.data('id', book.id);
     $tr.append(`<td>${book.title}</td>`);
     $tr.append(`<td>${book.author}</td>`);
+    $tr.append(`<td>${book.status}</td>`);
     $tr.append(`<td><button class="btn-delete">DELETE</button></td>`);
+    $tr.append(`<td><button class="btn-read">MARK AS READ</button></td>`);
     $('#bookShelf').append($tr);
   }
 }
@@ -80,4 +87,24 @@ function deleteBook(){
       alert('something went wrong try again later')
     })
   
+}
+function readBook(){
+  console.log('read clicked');
+  //console.log( $(this).closest('tr').data('id') );
+  let bookId = $(this).closest('tr').data('id');
+  console.log(`changing status ${status}... for book ${bookId}...` );
+    $.ajax({
+        method: 'PUT',
+        url: `/books/${bookId}`,
+        data: {status: status}
+        
+    })
+    .then( function(response) {
+        refreshBooks();
+    })
+    .catch( function(error){
+        console.log('error in mark as read', error);
+        alert('something bad happened. try again later')
+    })
+
 }
