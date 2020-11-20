@@ -39,15 +39,15 @@ router.post('/',  (req, res) => {
 // Request must include a parameter indicating what book to update - the id
 // Request body must include the content to update - the status
 router.put('/:id',  (req, res) => {
-  let book = req.body; // Book with updated content
-  let id = req.params.id; // id of the book to update
-  let status = req.body.status;
-  console.log(`Updating book ${id} with `, book);
-  let sqlText = ``;
-  if(status == 'Want to Read'){
-    sqlText = `UPDATE books SET status=Read WHERE id=$1;`
-  }
-  pool.query( sqlText, [id] )
+  let bookId = req.params.id;//id of book to update
+  //let book = req.body; // Book with updated content
+  //let status = req.body;
+  console.log(`Updating book ${bookId} with `);
+  let sqlText = `UPDATE books SET status='Read' WHERE id=$1;`;
+  
+    //sqlText = `UPDATE books SET status='Read' WHERE id=$1;`
+  //}
+  pool.query( sqlText, [bookId] )
     .then( (result) => {
       res.sendStatus(200)
     })
@@ -65,7 +65,7 @@ router.put('/:id',  (req, res) => {
 // Request must include a parameter indicating what book to update - the id
 router.delete('/:id',  (req, res) => {
   let id = req.params.id; // id of the thing to delete
-  console.log('Delete route called with id of', id);
+  //console.log('Delete route called with id of', id);
   let sqlText = `DELETE FROM books WHERE id=$1;`;
   pool.query(sqlText, [id])
   .then( (result) => {

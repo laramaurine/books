@@ -10,7 +10,7 @@ function addClickHandlers() {
   $('#bookShelf').on('click', '.btn-read', readBook);
   $('#bookShelf').on('click', '.btn-read', function(event){
     let bookId = $(this).closest('tr').data('id');
-    readBook('read', bookId)
+    //readBook('read', bookId)
   });
   // TODO - Add code for edit & delete buttons
 }
@@ -91,12 +91,13 @@ function deleteBook(){
 function readBook(){
   console.log('read clicked');
   //console.log( $(this).closest('tr').data('id') );
-  let bookId = $(this).closest('tr').data('id');
-  console.log(`changing status ${status}... for book ${bookId}...` );
+  let id = $(this).closest('tr').data('id');
+  console.log(`changing status ${status}... for book ${id}...` );
+    
     $.ajax({
         method: 'PUT',
-        url: `/books/${bookId}`,
-        data: {status: status}
+        url: `/books/${id}`,
+        //data: {status: status}
         
     })
     .then( function(response) {
